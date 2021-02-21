@@ -2,27 +2,30 @@
 title: Numeric Example
 output: pdf_document
 ---
-
-```{r setup, include=FALSE,warning=FALSE,echo=FALSE,message=FALSE}
-knitr::opts_knit$set(root.dir = "C:/Users/Christina/Desktop/mse-r/MSE-R")
+```{r}
+#Set the library's directory first!
+mseDirectory="/home/tc/Projects/github/tchronis/MSE-R"
 ```
 
-## init
-Set the library's directory first!
+```{r setup, include=FALSE,warning=FALSE,echo=FALSE,message=FALSE}
+knitr::opts_knit$set(root.dir = mseDirectory)
+```
 
 ```{r,warning=FALSE,message=FALSE}
 #Load Libraries and functions
-setwd("C:/Users/Christina/Desktop/mse-r/MSE-R")
+setwd(mseDirectory)
 source("mse.R")
 ```
 
 ## Import precomputed data
 Set the data's directory preferably in the variable 'filename'.
 ```{r }
-filename<-"import/round1m1-1.xls.pre.dat"
+filename<-paste(directory,"/import/round1m1-1.xls.pre.dat",sep="")
 ```
 Load the data in variables with meaningful names
 ```{r }
+data <- read.delim(filename, header = TRUE, sep="", as.is=TRUE)
+
 x<-import(filename)
 g(header,noM,noU,noD,noAttr,distanceMatrices,matchMatrix,mate)%=%x
 ```
