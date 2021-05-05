@@ -16,26 +16,80 @@ knitr::opts_knit$set(root.dir = mseDirectory)
 setwd(mseDirectory)
 source("mse.R")
 ```
-
 ## Import precomputed data
 Set the data's directory preferably in the variable 'filename'.
 ```{r }
-filename<-paste(directory,"/import/round1m1-1.xls.pre.dat",sep="")
+filename<-paste(mseDirectory,"/import/round1m1-1.xls.pre.dat",sep="")
+filename<-paste(mseDirectory,"/import/precomp_proof.dat",sep="")
 ```
 Load the data in variables with meaningful names
 ```{r }
-data <- read.delim(filename, header = TRUE, sep="", as.is=TRUE)
 
-x<-import(filename)
-g(header,noM,noU,noD,noAttr,distanceMatrices,matchMatrix,mate)%=%x
+library(data.table)
+
+#res <- microbenchmark(
+#  read.csv = read.delim(filename, header = TRUE, sep="", as.is=TRUE),
+#  fread = data.table::fread(filename, header=TRUE),
+#  times = 5)
+
+import2(filename)
+head(DT)
+class(DT)
+typeof(DT)
+length(DT)
+#attributes(DT)
+key(DT)
+
+all.equal(noU,noD)
 ```
-
 ## Routines (calculate payoff matrix, inequalities members, dataArray)
 ```{r }
+#Add new columns
+#fields = c("payoff")
+x1=2;x2=3;x3=-1;
+DT[, payoff := 1+Distance1*x1+Distance2*x2+Distance3*x3]
+#DT[,payoff:=NULL]
+View(DT[Match==1,])
+
+
+a<-DT[Match==1,.(Market,UpStream,DownStream)]
+b<-DT[Match==1,.(Market,UpStream,DownStream)]
+cc<-merge(a,b,by="Market",no.dups = FALSE,allow.cartesian=TRUE,all=TRUE)
+cc<-cc[UpStream.x < UpStream.y]
+
+
+
+Market -> m
+i -> D(i)
+j -> D(j)
+Factual:
+f(
+ p(m,i,D1(i)),p(m,i,D2(i)),...,p(m,i,Dk(i)),
+ p(m,j,D1(j)),p(m,j,D2(j)),...,p(m,j,Dl(j))
+)
+CounterFactual:
+f(
+ p(m,i,D1(j)),p(m,i,D2(j)),...,p(m,i,Dl(j)),
+ p(m,j,D1(i)),p(m,j,D2(i)),...,p(m,j,Dk(i))
+)
+
+data table (dependent on mate)
+m,i,j,factual(true/false),pairIndex(++),d1,d2,...,dN,payoff
+
+calculate payoff using x vector
+
+aggregate(factual,counterFactual)
+
+aggregate per market
+
+aggregateAll
+
+
+
 #Create payoffMatrix
 Cx<-Cx(noAttr)
 payoffMatrix<-CpayoffMatrix(noM,noU,noD,Cx,distanceMatrices,noAttr)
-
+noD
 #Assign payoffMatrix numerical values (set x's)
 xval<-c(1,2)
 payoffMatrix<-assignpayoffMatrix(payoffMatrix,xval)

@@ -2,24 +2,31 @@
 if (!"Matrix" %in% installed.packages()) install.packages("Matrix")
 if (!"lpSolve" %in% installed.packages()) install.packages("lpSolve")
 if (!"dplyr" %in% installed.packages()) install.packages("dplyr")
+if (!"data.table" %in% installed.packages()) install.packages("data.table")
 if (!"Ryacas" %in% installed.packages()) install.packages("Ryacas")
 if (!"Ryacas0" %in% installed.packages()) install.packages("Ryacas0")
 if (!"doSNOW" %in% installed.packages()) install.packages("doSNOW")
 if (!"foreach" %in% installed.packages()) install.packages("foreach")
 if (!"DEoptim" %in% installed.packages()) install.packages("DEoptim")
+if (!"microbenchmark" %in% installed.packages()) install.packages("microbenchmark")
+
 
 #Import installed packages
 library(Matrix)
 library(lpSolve)
 library(dplyr)
+library(data.table)
 library(Ryacas)
 library(Ryacas0)
 library(doSNOW)
 library(foreach)
 library(DEoptim)
+library("microbenchmark")
+
 
 #Import functions
 source("import.R")
+source("import2.R")
 source("matching.R")
 source("payoff.R")
 source("assignList.R")

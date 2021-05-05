@@ -1,13 +1,19 @@
 import<-function(filename){
-	
-	#Importing data 
-	data <- read.delim(filename, header = TRUE, sep="", as.is=TRUE)
 
-	#Sort is m,u,d
-	data <- data[order(data[1],data[2],data[3]),]
+	#Importing data
+	#Deprecated
+  data <- read.delim(filename, header = TRUE, sep="", as.is=TRUE)
+	#data <- data.table::fread(filename, header=TRUE)
 
 	#Header names
 	header<-colnames(data)
+
+	#Sort is m,u,d
+	#Deprecated
+	#data <- data[order(data[1],data[2],data[3]),]
+	#data <- data[order(header[1],header[2],header[3])]
+	#Convert Table to a Data Frame
+	#data <- as.data.frame(data)
 
 	#Calculating number of attributes
 	noAttr<-length(data)-3-1

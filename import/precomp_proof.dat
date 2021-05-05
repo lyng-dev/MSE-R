@@ -1,4 +1,4 @@
-m	u	d	a1	a2	a3	match
+Market	UpStream	DownStream	Distance1	Distance2	Distance3	Match
 1	1	1	d1111	d1112	d1113	0
 1	1	2	d1121	d1122	d1123	0
 1	2	1	d1211	d1212	d1213	0
