@@ -21,6 +21,7 @@ Set the data's directory preferably in the variable 'filename'.
 ```{r }
 filename<-paste(mseDirectory,"/import/round1m1-1.xls.pre.dat",sep="")
 filename<-paste(mseDirectory,"/import/precomp_proof.dat",sep="")
+filename<-paste(mseDirectory,"/import/precomp_testdata.dat",sep="")
 ```
 Load the data in variables with meaningful names
 ```{r }
@@ -46,16 +47,19 @@ all.equal(noU,noD)
 ```{r }
 #Add new columns
 #fields = c("payoff")
-x1=2;x2=3;x3=-1;
-DT[, payoff := 1+Distance1*x1+Distance2*x2+Distance3*x3]
+x1=2;x2=3;x3=1;x4=1;x5=-1;
+DT[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
 #DT[,payoff:=NULL]
 View(DT[Match==1,])
 
+# Calculating inequality members
+DTmatched<-DT[Match==1,.(Market,UpStream,DownStream)]
+ineqmembers<-merge(DTmatched,DTmatched,by="Market",no.dups = FALSE,allow.cartesian=TRUE,all=TRUE)
+ineqmembers<-ineqmembers[UpStream.x < UpStream.y,.(Market,UpStream.x,UpStream.y,DownStream.x,DownStream.y)]
+ineqmembers<-ineqmembers[order(Market,UpStream.x,UpStream.y)]
+up1<-unique(ineqmembers[,.(Market,UpStream.x,UpStream.y,DownStream.x)])
+up2<-unique(ineqmembers[,.(Market,UpStream.x,UpStream.y,DownStream.y)])
 
-a<-DT[Match==1,.(Market,UpStream,DownStream)]
-b<-DT[Match==1,.(Market,UpStream,DownStream)]
-cc<-merge(a,b,by="Market",no.dups = FALSE,allow.cartesian=TRUE,all=TRUE)
-cc<-cc[UpStream.x < UpStream.y]
 
 
 

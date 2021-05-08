@@ -4,7 +4,7 @@ import2<-function(filename){
 	DT <<- data.table::fread(filename, header=TRUE)
 
 	#Adding keys for fast filtering
-	#setkey(DT,Market,UpStream,DownStream)
+	setkey(DT,Market,UpStream,DownStream)
 
 	#Header names
 	header <<- colnames(DT)
