@@ -53,13 +53,28 @@ DT[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
 View(DT[Match==1,])
 
 # Calculating inequality members
-DTmatched<-DT[Match==1,.(Market,UpStream,DownStream)]
-ineqmembers<-merge(DTmatched,DTmatched,by="Market",no.dups = FALSE,allow.cartesian=TRUE,all=TRUE)
-ineqmembers<-ineqmembers[UpStream.x < UpStream.y,.(Market,UpStream.x,UpStream.y,DownStream.x,DownStream.y)]
+matched<-DT[Match==1,.(Market,UpStream,DownStream)]
+ineqmembers<-merge(matched,matched,by="Market",no.dups = FALSE,allow.cartesian=TRUE,all=TRUE)
+ineqmembers<-ineqmembers[UpStream.x < UpStream.y] #,.(Market,UpStream.x,UpStream.y,DownStream.x,DownStream.y,dist1.x)]
 ineqmembers<-ineqmembers[order(Market,UpStream.x,UpStream.y)]
 up1<-unique(ineqmembers[,.(Market,UpStream.x,UpStream.y,DownStream.x)])
-up2<-unique(ineqmembers[,.(Market,UpStream.x,UpStream.y,DownStream.y)])
+setnames(up1, "UpStream.x", "UpStream")
+setnames(up1, "UpStream.y", "UpStream2")
+setnames(up1,"DownStream.x","DownStream")
+setkey(up1,Market,UpStream,DownStream)
+up1<-DT[up1]
+up1<-up1[order(Market,UpStream,UpStream2,DownStream)]
 
+up2<-unique(ineqmembers[,.(Market,UpStream.x,UpStream.y,DownStream.y)])
+setnames(up2, "UpStream.y", "UpStream")
+setnames(up2,"DownStream.y","DownStream")
+setnames(up2, "UpStream.x", "UpStream2")
+setkey(up2,Market,UpStream,DownStream)
+up2<-DT[up2]
+up2<-up2[order(Market,UpStream,UpStream2,DownStream)]
+
+x1=2;x2=3;x3=1;x4=1;x5=-100;
+up1[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
 
 
 
