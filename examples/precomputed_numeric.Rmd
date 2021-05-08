@@ -112,7 +112,8 @@ up4[, payoff := 1+Distance1*x1+Distance2*x2+Distance3]
 up4N<-up4[,.N,by=c("Market","UpStream1","UpStream2")]
 up4P<-up4[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
-u<-up1P+up2P-up3P-up4P
+uN<-up1N+up2N-up3N-up4N
+uP<-up1P+up2P-up3P-up4P
 
 
 
