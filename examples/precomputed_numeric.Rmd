@@ -94,29 +94,60 @@ up4<-DT[up4]
 setnames(up4,"UpStream","UpStream2")
 up4<-up4[order(Market,UpStream1,UpStream2,DownStream)]
 
-x1=2;x2=3;x3=1;
+x1=2;x2=3;x3=1;x4=1;x5=1;
+DT[, c('V1', 'V3'), with = FALSE]
 
-up1[, payoff := 1+Distance1*x1+Distance2*x2+Distance3]
+payoff<-'payoff'
+up1[, (payoff):= 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
+
+
+b<-c(1,2,3,4,5);
+b[1]
+up1[, (payoff):= 1+dist1*b[1]+dist2*b[2]+dist3*b[3]+dist4*b[4]+dist5*b[5]]
+
+#=============================================================
+y=1
+dt.out <- up1[, D := rowSums(.SD * c(1,2)), .SDcols = 4:(4+y)]
+#=============================================================
+
+dt[ , c(cols, 'x'), with = FALSE]
+
+cols <- c('dist1','dist2')
+d1='dist1'
+d2='dist2'
+up1[, (payoff):= c(..dist1,..dist2)*c(x1,x2),with=FALSE]
+up1[, (payoff):= ..cols * c(1,2)]
+dt <- data.table(x = 1:10, y = rnorm(10), z = runif(10))
+cols <- c('y', 'z')
+
+C="newcoll"
+a<-up1[, .(C = ..d1)]
+
 up1N<-up1[,.N,by=c("Market","UpStream1","UpStream2")]
 up1P<-up1[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
-up2[, payoff := 1+Distance1*x1+Distance2*x2+Distance3]
+up2[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
 up2N<-up2[,.N,by=c("Market","UpStream1","UpStream2")]
 up2P<-up2[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
-up3[, payoff := 1+Distance1*x1+Distance2*x2+Distance3]
+up3[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
 up3N<-up3[,.N,by=c("Market","UpStream1","UpStream2")]
 up3P<-up3[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
-up4[, payoff := 1+Distance1*x1+Distance2*x2+Distance3]
+up4[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
 up4N<-up4[,.N,by=c("Market","UpStream1","UpStream2")]
 up4P<-up4[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
 uN<-up1N+up2N-up3N-up4N
 uP<-up1P+up2P-up3P-up4P
 
+p<-uP[V1>0,.N]
+n<-uP[V1<0,.N]
+p+n
 
+up1[,payoff]
 
+# Theory ...
 Market -> m
 i -> D(i)
 j -> D(j)
