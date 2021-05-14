@@ -107,7 +107,22 @@ up1[, (payoff):= 1+dist1*b[1]+dist2*b[2]+dist3*b[3]+dist4*b[4]+dist5*b[5]]
 
 #=============================================================
 y=1
-dt.out <- up1[, D := rowSums(.SD * c(1,2)), .SDcols = 4:(4+y)]
+up1[, D := rowSums(.SD * c(1,2)), .SDcols = 2:2]
+up1[, D := rowSums(.SD), .SDcols = 4:5]
+up1[, D := list(.SD) * c(1,2), .SDcols = 4:5]
+
+up1[, D := rowMeans(.SD), .SDcols = 4:5]
+
+library(globe)
+
+up1[, D := .SD %dot% c(1,2), .SDcols = 4:5]
+
+library(matrixStats)
+
+w<-c(1,2)
+up1[, D := rowWeightedMeans(.SD, w=w), .SDcols = 4:5]
+
+rowWeightedMeans(x, w = w)
 #=============================================================
 
 dt[ , c(cols, 'x'), with = FALSE]
