@@ -26,7 +26,6 @@ filename<-paste(mseDirectory,"/import/precomp_testdata.dat",sep="")
 Load the data in variables with meaningful names
 ```{r }
 
-library(data.table)
 
 #res <- microbenchmark(
 #  read.csv = read.delim(filename, header = TRUE, sep="", as.is=TRUE),
@@ -138,18 +137,19 @@ cols <- c('y', 'z')
 C="newcoll"
 a<-up1[, .(C = ..d1)]
 
+up1[, payoff := 1+Distance1*x1+Distance1*x2+Distance1*x3+Distance1*x4+Distance1*x5]
 up1N<-up1[,.N,by=c("Market","UpStream1","UpStream2")]
 up1P<-up1[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
-up2[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
+up2[, payoff := 1+Distance1*x1+Distance1*x2+Distance1*x3+Distance1*x4+Distance1*x5]
 up2N<-up2[,.N,by=c("Market","UpStream1","UpStream2")]
 up2P<-up2[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
-up3[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
+up3[, payoff := 1+Distance1*x1+Distance1*x2+Distance1*x3+Distance1*x4+Distance1*x5]
 up3N<-up3[,.N,by=c("Market","UpStream1","UpStream2")]
 up3P<-up3[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 
-up4[, payoff := 1+dist1*x1+dist2*x2+dist3*x3+dist4*x4+dist5*x5]
+up4[, payoff := 1+Distance1*x1+Distance1*x2+Distance1*x3+Distance1*x4+Distance1*x5]
 up4N<-up4[,.N,by=c("Market","UpStream1","UpStream2")]
 up4P<-up4[,sum(payoff),by=c("Market","UpStream1","UpStream2")]
 

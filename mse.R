@@ -9,6 +9,7 @@ if (!"doSNOW" %in% installed.packages()) install.packages("doSNOW")
 if (!"foreach" %in% installed.packages()) install.packages("foreach")
 if (!"DEoptim" %in% installed.packages()) install.packages("DEoptim")
 if (!"microbenchmark" %in% installed.packages()) install.packages("microbenchmark")
+if (!"knitr" %in% installed.packages()) install.packages("knitr")
 
 
 #Import installed packages
@@ -22,7 +23,7 @@ library(doSNOW)
 library(foreach)
 library(DEoptim)
 library("microbenchmark")
-
+library(knitr)
 
 #Import functions
 source("import.R")
