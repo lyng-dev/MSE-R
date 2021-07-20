@@ -4,7 +4,8 @@ import<-function(filename){
 	data <- read.delim(filename, header = TRUE, sep="", as.is=TRUE)
 
 	#Sort is m,u,d
-	data <- data[order(data[1],data[2],data[3]),]
+	#commenting out due to cannot xtfrm data framescannot xtfrm data framescannot xtfrm data frames
+	#data <- data[order(data[1],data[2],data[3]),]
 
 	#Header names
 	header<-colnames(data)

@@ -4,7 +4,7 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE,warning=FALSE,echo=FALSE,message=FALSE}
-knitr::opts_knit$set(root.dir = "/home/tchronis/Projects/denisa/MSE-R")
+knitr::opts_knit$set(root.dir = "~/Projects/github/tchronis/MSE-R")
 ```
 
 ## init
@@ -12,7 +12,7 @@ Set the library's directory first!
 
 ```{r,warning=FALSE,message=FALSE}
 #Load Libraries and functions
-setwd("/home/tchronis/Projects/denisa/MSE-R")
+setwd("~/Projects/github/tchronis/MSE-R")
 source("mse.R")
 ```
 
